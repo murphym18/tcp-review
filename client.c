@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(void) {
+int main (int argc, char *argv[]) {
   printf("client\n");
   return 0;
 }
