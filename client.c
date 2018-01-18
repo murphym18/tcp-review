@@ -37,6 +37,7 @@ int main (int argc, char *argv[]) {
 
   char buffer[256];
   int n = read(sockfd, buffer, 255);
+  close(sockfd);
   if (n < 0) 
     error("ERROR reading from socket");
   printf("%s\n",buffer);

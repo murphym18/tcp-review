@@ -61,6 +61,16 @@ int main (int argc, char *argv[]) {
   if (n < 0)
     error("ERROR writing to socket");
 
+  // to avoid a nasty "Address already in use" error, the client 
+  // is programmed to close as soon it gets the data we sent in
+  // the write call. We need to sleep the process so the client
+  // has time to initiate the TCP fin
+  struct timespec sleep_duration;
+  bzero((uint8_t *) &sleep_duration, sizeof(sleep_duration));
+  // wait half a second
+  sleep_duration.tv_nsec = 500000000;
+  if (nanosleep(&sleep_duration, NULL) < 0)
+    error("Error trying to sleep");
   close(newsockfd);
   close(sockfd);
   return 0;
